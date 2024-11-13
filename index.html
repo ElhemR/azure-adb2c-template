@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JTI CONNEXUS Login</title>
+  <title>JTI CONNEXUS Login AD</title>
   <style>
       /* Basic reset and styling */
       * {
@@ -109,7 +109,6 @@
   </style>
 </head>
 <body>
-
 <div class="container">
   <div class="logo">
     <img src="https://example.com/logo.png" alt="JTI CONNEXUS Logo">
@@ -117,25 +116,8 @@
   <h1>JTI CONNEXUS</h1>
   <h2>LOGIN</h2>
 
-  <!-- Email Address Field -->
-  <div class="form-group">
-    <label for="email">E-Mail Address *</label>
-    <input type="email" id="email" name="email" required>
-  </div>
-
-  <!-- Password Field -->
-  <div class="form-group">
-    <label for="password">Password *</label>
-    <input type="password" id="password" name="password" required>
-  </div>
-
-  <!-- Login Button -->
-  <button class="login-btn">LOGIN</button>
-
-  <!-- Microsoft Login Button -->
-  <button class="microsoft-btn">
-    <img src="https://example.com/microsoft-logo.png" alt="Microsoft Logo"> SIGN IN WITH MICROSOFT
-  </button>
+  <!-- Azure AD B2C Injects the Login Form Here -->
+  <div id="api"></div>
 
   <!-- Help Link -->
   <div class="help-link">
@@ -143,5 +125,7 @@
   </div>
 </div>
 
+<!-- Required Azure AD B2C Script -->
+<script src="https://yourtenantname.b2clogin.com/static/js/1.0.0/content/js/b2c.js"></script>
 </body>
 </html>

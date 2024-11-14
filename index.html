@@ -150,65 +150,74 @@
     <h1 class="title">{{HEADER_LABEL}}</h1>
 
     <!-- Azure AD B2C Login Form Placeholder -->
-
-
-    <!-- Custom Fields -->
-    <form id="login-form">
-      <!-- Email Address Field -->
-      <div class="form-group">
-        <label for="email">E-mail Address *</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-
-      <!-- Password Field -->
-      <div class="form-group">
-        <label for="password">Password *</label>
-        <input type="password" id="password" name="password" required>
-      </div>
-
-      <!-- Confirmation Checkbox -->
-      <div class="confirmation">
-        <input type="checkbox" id="confirmation-checkbox" name="confirmation">
-        <label for="confirmation-checkbox">{{CONFIRMATION_TEXT}}</label>
-      </div>
-
-      <!-- Submit Button -->
-      <button type="submit" class="submit-btn" id="submit-btn">Login</button>
-    </form>
+    <div id="api"></div>
   </div>
 
   <!-- Required Azure AD B2C Tenant Script -->
   <script src="https://{{TENANT_NAME}}.b2clogin.com/static/js/1.0.0/content/js/b2c.js"></script>
 
   <script>
-    // Dynamic Background Logic
-    (function () {
-      const backgroundLoginImage = "{{BACKGROUND_LOGIN_IMAGE}}"; // Placeholder for the image URL
-      const gradientBackground = `linear-gradient(145deg, 
-        rgba(207, 174, 168, 0.3) 16%, 
-        rgba(139, 188, 188, 0.3) 45%, 
-        rgba(100, 193, 195, 0.3) 60%, 
-        rgba(73, 184, 161, 0.3) 80%, 
-        rgba(80, 178, 104, 0.3) 98%)`;
+    document.addEventListener('DOMContentLoaded', () => {
+      const apiContainer = document.getElementById('api');
 
-      // Set the background dynamically
-      document.body.style.background = backgroundLoginImage
-        ? `url(${backgroundLoginImage})`
-        : gradientBackground;
-    })();
+      // Wait for the B2C form to render
+      const observer = new MutationObserver(() => {
+        const b2cForm = apiContainer.querySelector('form');
 
-    // Checkbox validation for submission
-    document.getElementById('login-form').addEventListener('submit', function (e) {
-      const checkbox = document.getElementById('confirmation-checkbox');
+        if (b2cForm) {
+          // Update Email Label
+          const emailLabel = b2cForm.querySelector('label[for="email"]');
+          if (emailLabel) {
+            emailLabel.textContent = "{{EMAIL_LABEL}}";
+          }
 
-      // If the checkbox is not checked, prevent submission and show error
-      if (!checkbox.checked) {
-        e.preventDefault();
-        checkbox.classList.add('error');
-        alert('Please confirm you are over 18 to proceed.');
-      } else {
-        checkbox.classList.remove('error');
-      }
+          // Update Password Label
+          const passwordLabel = b2cForm.querySelector('label[for="password"]');
+          if (passwordLabel) {
+            passwordLabel.textContent = "{{PASSWORD_LABEL}}";
+          }
+
+          // Add Confirmation Checkbox
+          const confirmationGroup = document.createElement('div');
+          confirmationGroup.className = 'confirmation';
+
+          const confirmationCheckbox = document.createElement('input');
+          confirmationCheckbox.type = 'checkbox';
+          confirmationCheckbox.id = 'dynamic-confirmation-checkbox';
+          confirmationCheckbox.name = 'confirmation';
+
+          const confirmationLabel = document.createElement('label');
+          confirmationLabel.htmlFor = 'dynamic-confirmation-checkbox';
+          confirmationLabel.textContent = "{{CONFIRMATION_TEXT}}";
+
+          confirmationGroup.appendChild(confirmationCheckbox);
+          confirmationGroup.appendChild(confirmationLabel);
+
+          b2cForm.appendChild(confirmationGroup);
+
+          // Add Checkbox Validation
+          b2cForm.addEventListener('submit', (e) => {
+            if (!confirmationCheckbox.checked) {
+              e.preventDefault();
+              confirmationCheckbox.classList.add('error');
+              alert('Please confirm you are over 18 to proceed.');
+            } else {
+              confirmationCheckbox.classList.remove('error');
+            }
+          });
+
+          // Update Login Button Label
+          const loginButton = b2cForm.querySelector('button[type="submit"]');
+          if (loginButton) {
+            loginButton.textContent = "{{LOGIN_BUTTON_LABEL}}";
+          }
+
+          // Stop observing once the form is modified
+          observer.disconnect();
+        }
+      });
+
+      observer.observe(apiContainer, { childList: true, subtree: true });
     });
   </script>
 </body>

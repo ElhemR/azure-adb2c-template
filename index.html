@@ -3,129 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JTI CONNEXUS Login AD</title>
+  <title>System Page Template</title>
   <style>
-      /* Basic reset and styling */
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: Arial, sans-serif;
-      }
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-      }
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    }
 
-      .container {
-          max-width: 400px;
-          width: 100%;
-          padding: 20px;
-          background-color: #fff;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          text-align: center;
-      }
+    .container {
+      width: 100%;
+      max-width: 640px;
+      padding: 20px;
+      text-align: center;
+    }
 
-      .logo {
-          margin-bottom: 20px;
-      }
+    .title {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
 
-      .logo img {
-          width: 100px;
-      }
+    .subheading {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      color: #666;
+    }
 
-      h1 {
-          font-size: 1.5rem;
-          margin-bottom: 20px;
-          color: #333;
-      }
+    .form-box {
+      width: 100%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-      .form-group {
-          margin-bottom: 15px;
-          text-align: left;
-      }
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
 
-      .form-group label {
-          font-size: 0.9rem;
-          color: #666;
-      }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
 
-      .form-group input {
-          width: 100%;
-          padding: 10px;
-          font-size: 1rem;
-          margin-top: 5px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-      }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
 
-      .login-btn, .microsoft-btn {
-          width: 100%;
-          padding: 10px;
-          font-size: 1rem;
-          margin-top: 15px;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-      }
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      color: #fff;
+      background: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
 
-      .login-btn {
-          background-color: #333;
-          color: #fff;
-      }
+    .submit-btn:hover {
+      background: #555;
+    }
 
-      .microsoft-btn {
-          background-color: #2f2f2f;
-          color: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-      }
-
-      .microsoft-btn img {
-          width: 20px;
-          margin-right: 10px;
-      }
-
-      .help-link {
-          margin-top: 10px;
-          font-size: 0.9rem;
-          color: #666;
-      }
-
-      .help-link a {
-          color: #0073e6;
-          text-decoration: none;
-      }
-
-      .help-link a:hover {
-          text-decoration: underline;
-      }
+    .extra-content {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="logo">
-    <img src="https://example.com/logo.png" alt="JTI CONNEXUS Logo">
+  <!-- Container -->
+  <div class="container" style="background-image: url('path-to-background-image.jpg');">
+    <!-- Title -->
+    <h1 class="title">Welcome to JTI CONNEXUS</h1>
+    <p class="subheading">Please log in to access your account.</p>
+
+    <!-- Form -->
+    <div class="form-box">
+      <form id="loginForm">
+        <!-- Form Group: Email -->
+        <div class="form-group">
+          <label for="email">E-Mail Address *</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <!-- Form Group: Password -->
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Login</button>
+      </form>
+
+      <!-- Extra Content -->
+      <div class="extra-content">
+        <p><a href="#">Problems with your login?</a></p>
+      </div>
+    </div>
   </div>
-  <h1>JTI CONNEXUS</h1>
-  <h2>LOGIN</h2>
-
-  <!-- Azure AD B2C Injects the Login Form Here -->
-  <div id="api"></div>
-
-  <!-- Help Link -->
-  <div class="help-link">
-    <p><a href="#">Problems with your login?</a></p>
-  </div>
-</div>
-
-<!-- Required Azure AD B2C Script to replace !! -->
-<script src="https://tenantname.b2clogin.com/static/js/1.0.0/content/js/b2c.js"></script>
 </body>
 </html>

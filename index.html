@@ -150,6 +150,9 @@
     <h1 class="title">{{HEADER_LABEL}}</h1>
 
     <!-- Azure AD B2C Login Form Placeholder -->
+    <div id="api"></div>
+
+    <!-- Custom Fields -->
     <form id="login-form">
       <!-- Email Address Field -->
       <div class="form-group">
@@ -180,7 +183,7 @@
   <script>
     // Dynamic Background Logic
     (function () {
-      const backgroundLoginImage = false; // {{BACKGROUND_LOGIN_IMAGE}} Placeholder for the image URL
+      const backgroundLoginImage = "{{BACKGROUND_LOGIN_IMAGE}}"; // Placeholder for the image URL
       const gradientBackground = `linear-gradient(145deg, 
         rgba(207, 174, 168, 0.3) 16%, 
         rgba(139, 188, 188, 0.3) 45%, 

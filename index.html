@@ -156,69 +156,72 @@
   <!-- Required Azure AD B2C Tenant Script -->
   <script src="https://{{TENANT_NAME}}.b2clogin.com/static/js/1.0.0/content/js/b2c.js"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const apiContainer = document.getElementById('api');
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const apiContainer = document.getElementById('api');
 
-      // Wait for the B2C form to render
-      const observer = new MutationObserver(() => {
-        const b2cForm = apiContainer.querySelector('form');
+    // Function to add the checkbox and adjust labels
+    const enhanceB2CForm = () => {
+      const b2cForm = apiContainer.querySelector('form');
 
-        if (b2cForm) {
-          // Update Email Label
-          const emailLabel = b2cForm.querySelector('label[for="email"]');
-          if (emailLabel) {
-            emailLabel.textContent = "{{EMAIL_LABEL}}";
-          }
-
-          // Update Password Label
-          const passwordLabel = b2cForm.querySelector('label[for="password"]');
-          if (passwordLabel) {
-            passwordLabel.textContent = "{{PASSWORD_LABEL}}";
-          }
-
-          // Add Confirmation Checkbox
-          const confirmationGroup = document.createElement('div');
-          confirmationGroup.className = 'confirmation';
-
-          const confirmationCheckbox = document.createElement('input');
-          confirmationCheckbox.type = 'checkbox';
-          confirmationCheckbox.id = 'dynamic-confirmation-checkbox';
-          confirmationCheckbox.name = 'confirmation';
-
-          const confirmationLabel = document.createElement('label');
-          confirmationLabel.htmlFor = 'dynamic-confirmation-checkbox';
-          confirmationLabel.textContent = "{{CONFIRMATION_TEXT}}";
-
-          confirmationGroup.appendChild(confirmationCheckbox);
-          confirmationGroup.appendChild(confirmationLabel);
-
-          b2cForm.appendChild(confirmationGroup);
-
-          // Add Checkbox Validation
-          b2cForm.addEventListener('submit', (e) => {
-            if (!confirmationCheckbox.checked) {
-              e.preventDefault();
-              confirmationCheckbox.classList.add('error');
-              alert('Please confirm you are over 18 to proceed.');
-            } else {
-              confirmationCheckbox.classList.remove('error');
-            }
-          });
-
-          // Update Login Button Label
-          const loginButton = b2cForm.querySelector('button[type="submit"]');
-          if (loginButton) {
-            loginButton.textContent = "{{LOGIN_BUTTON_LABEL}}";
-          }
-
-          // Stop observing once the form is modified
-          observer.disconnect();
+      if (b2cForm && !b2cForm.querySelector('#dynamic-confirmation-checkbox')) {
+        // Update Email Label
+        const emailLabel = b2cForm.querySelector('label[for="email"]');
+        if (emailLabel) {
+          emailLabel.textContent = "{{EMAIL_LABEL}}";
         }
-      });
 
-      observer.observe(apiContainer, { childList: true, subtree: true });
+        // Update Password Label
+        const passwordLabel = b2cForm.querySelector('label[for="password"]');
+        if (passwordLabel) {
+          passwordLabel.textContent = "{{PASSWORD_LABEL}}";
+        }
+
+        // Add Confirmation Checkbox
+        const confirmationGroup = document.createElement('div');
+        confirmationGroup.className = 'confirmation';
+
+        const confirmationCheckbox = document.createElement('input');
+        confirmationCheckbox.type = 'checkbox';
+        confirmationCheckbox.id = 'dynamic-confirmation-checkbox';
+        confirmationCheckbox.name = 'confirmation';
+
+        const confirmationLabel = document.createElement('label');
+        confirmationLabel.htmlFor = 'dynamic-confirmation-checkbox';
+        confirmationLabel.textContent = "{{CONFIRMATION_TEXT}}";
+
+        confirmationGroup.appendChild(confirmationCheckbox);
+        confirmationGroup.appendChild(confirmationLabel);
+
+        b2cForm.appendChild(confirmationGroup);
+
+        // Add Checkbox Validation
+        b2cForm.addEventListener('submit', (e) => {
+          if (!confirmationCheckbox.checked) {
+            e.preventDefault();
+            confirmationCheckbox.classList.add('error');
+            alert('Please confirm you are over 18 to proceed.');
+          } else {
+            confirmationCheckbox.classList.remove('error');
+          }
+        });
+
+        // Update Login Button Label
+        const loginButton = b2cForm.querySelector('button[type="submit"]');
+        if (loginButton) {
+          loginButton.textContent = "{{LOGIN_BUTTON_LABEL}}";
+        }
+      }
+    };
+
+    // Observe and ensure the form is enhanced after it loads
+    const observer = new MutationObserver(() => {
+      enhanceB2CForm();
     });
-  </script>
+
+    observer.observe(apiContainer, { childList: true, subtree: true });
+  });
+</script>
+
 </body>
 </html>

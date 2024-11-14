@@ -16,33 +16,53 @@
       font-family: Arial, sans-serif;
       height: 100vh;
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
     }
 
+    .header-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container .logo {
+      max-height: 50px;
+    }
+
+    .welcome-message {
+      font-weight: bold;
+      font-size: 2.5rem;
+      letter-spacing: 0.625rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      word-break: break-word;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      .welcome-message {
+        font-size: 1.875rem;
+        letter-spacing: 0.094rem;
+        line-height: 1.1;
+      }
+    }
+
     .container {
       width: 100%;
       max-width: 640px;
+      margin: 20px auto;
       padding: 20px;
       text-align: center;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .logo {
-      max-height: 50px;
     }
 
     .title {
@@ -90,6 +110,8 @@
 
     .confirmation input[type="checkbox"].error {
       border-color: red;
+      outline: 2px solid red;
+      box-shadow: 0 0 5px red;
     }
 
     .confirmation label {
@@ -114,12 +136,16 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
-    </div>
+  <!-- Header Section -->
+  <div class="header-container">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+  </div>
 
+  <!-- Welcome Message -->
+  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
+
+  <!-- Main Content -->
+  <div class="container">
     <!-- Title -->
     <h1 class="title">{{HEADER_LABEL}}</h1>
 

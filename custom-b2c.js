@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Set Background Dynamically
-  const backgroundLoginImage = "{{BACKGROUND_LOGIN_IMAGE}}"; // Placeholder for the image URL
+  const backgroundLoginImage = false; // Placeholder for the image URL
   const gradientBackground = `linear-gradient(145deg, 
         rgba(207, 174, 168, 0.3) 16%, 
         rgba(139, 188, 188, 0.3) 45%, 

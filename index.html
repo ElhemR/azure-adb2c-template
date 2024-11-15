@@ -139,29 +139,7 @@
       background: #555;
     }
   </style>
-</head>
-<body>
-  <!-- Header Section -->
-  <div class="header-container">
-    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
-  </div>
-
-  <!-- Welcome Message -->
-  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
-
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Title -->
-    <h1 class="title">{{HEADER_LABEL2}}</h1>
-
-    <!-- Azure AD B2C Login Form Placeholder -->
-    <div id="api"></div>
-  </div>
-
-  <!-- Required Azure AD B2C Tenant Script -->
-  <script src="https://{{TENANT_NAME}}.b2clogin.com/static/js/1.0.0/content/js/b2c.js"></script>
-
-  <script>
+  <script defer>
     document.addEventListener('DOMContentLoaded', () => {
       const apiContainer = document.getElementById('api');
 
@@ -171,7 +149,7 @@
       }
 
       // Set Background Dynamically
-      const backgroundLoginImage = false; // Placeholder for the image URL{{BACKGROUND_LOGIN_IMAGE}}
+      const backgroundLoginImage = false; // Placeholder for the image URL
       const gradientBackground = `linear-gradient(145deg, 
         rgba(207, 174, 168, 0.3) 16%, 
         rgba(139, 188, 188, 0.3) 45%, 
@@ -232,5 +210,26 @@
       }, 500); // Check every 500ms
     });
   </script>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header-container">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+  </div>
+
+  <!-- Welcome Message -->
+  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Title -->
+    <h1 class="title">{{HEADER_LABEL}}</h1>
+
+    <!-- Azure AD B2C Login Form Placeholder -->
+    <div id="api"></div>
+  </div>
+
+  <!-- Required Azure AD B2C Tenant Script -->
+  <script src="https://{{TENANT_NAME}}.b2clogin.com/static/js/1.0.0/content/js/b2c.js" defer></script>
 </body>
 </html>

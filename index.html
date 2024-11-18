@@ -1,183 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{PAGE_TITLE}}</title>
-  <style>
-    /* General Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Sign In</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      height: 100vh;
-      margin: 0;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    .header-container {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .header-container .logo {
-      max-height: 50px;
-    }
-
-    .welcome-message {
-      font-weight: bold;
-      font-size: 2.5rem;
-      letter-spacing: 0.625rem;
-      line-height: 1.2;
-      text-transform: uppercase;
-      word-break: break-word;
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    @media (max-width: 600px) {
-      .welcome-message {
-        font-size: 1.875rem;
-        letter-spacing: 0.094rem;
-        line-height: 1.1;
-      }
-    }
-
-    .container {
-      width: 100%;
-      max-width: 640px;
-      margin: 20px auto;
-      padding: 20px;
-      text-align: center;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .title {
-      font-size: 1.8rem;
-      color: #333;
-      margin-bottom: 15px;
-    }
-
-    .confirmation {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      margin-top: 15px;
-      font-size: 0.9rem;
-      color: #333;
-    }
-
-    .confirmation input[type="checkbox"] {
-      margin-right: 10px;
-      width: 18px;
-      height: 18px;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .submit-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-      background: #555;
-    }
-  </style>
-  <!-- Load jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    // Wait for Azure AD B2C to fully render the page
-    $(document).on('pageRendered', function () {
-      console.log("Azure AD B2C page rendered");
-
-      // Change welcome message dynamically
-      $('.welcome-message').text('Welcome to Our Customized Login Page!');
-
-      // Add a dynamic label
-      const $label = $("<label>")
-        .text("This is a dynamically added label.")
-        .css({
-          display: "block",
-          "font-size": "1rem",
-          margin: "20px auto",
-          color: "#555"
-        });
-
-      $(".container").append($label);
-
-      // Dynamically modify form content (if a form exists in #api)
-      const $form = $("#api").find("form");
-      if ($form.length) {
-        console.log("Form found!");
-
-        // Add a confirmation checkbox
-        const $confirmationGroup = $("<div>").addClass("confirmation").css({
-          display: "flex",
-          "align-items": "center",
-          margin: "15px 0",
-          "font-size": "0.9rem",
-          color: "#333"
-        });
-
-        const $checkbox = $("<input>", {
-          type: "checkbox",
-          id: "dynamic-checkbox",
-        });
-
-        const $checkboxLabel = $("<label>", {
-          for: "dynamic-checkbox",
-          text: "I agree to the terms and conditions"
-        });
-
-        $confirmationGroup.append($checkbox).append($checkboxLabel);
-
-        // Insert before the submit button
-        const $submitButton = $form.find("button[type='submit']");
-        if ($submitButton.length) {
-          $confirmationGroup.insertBefore($submitButton);
-          $submitButton.prop("disabled", true);
-
-          // Enable submit button only when checkbox is checked
-          $checkbox.on("change", function () {
-            $submitButton.prop("disabled", !$checkbox.is(":checked"));
-          });
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
-      } else {
-        console.error("Form not found in #api!");
-      }
-    });
-  </script>
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #0078d4;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #005a9e;
+        }
+    </style>
 </head>
 <body>
-  <!-- Header Section -->
-  <div class="header-container">
-    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
-  </div>
+    <!-- Simulate Injected Controls -->
+    <div class="form-container">
+        <h1>Custom Sign In</h1>
+        <!-- The div below is where Azure AD B2C will inject controls -->
+        <div id="api"></div>
 
-  <!-- Welcome Message -->
-  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
+        <!-- Placeholder controls for local testing -->
+        <form>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+        </form>
 
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Title -->
-    <h1 class="title">{{HEADER_LABEL}}</h1>
+        <!-- Social Login Buttons for Local Testing -->
+        <div class="social-buttons mt-3">
+            <button class="btn btn-danger btn-block">Sign in with Google</button>
+            <button class="btn btn-dark btn-block">Sign in with GitHub</button>
+        </div>
+    </div>
 
-    <!-- Azure AD B2C Login Form Placeholder -->
-    <div id="api"></div>
-  </div>
+    <!-- Script for Dynamic Testing -->
+    <script>
+        $(document).ready(function () {
+            console.log("Custom page loaded. Ready for Azure AD B2C integration.");
+        });
+    </script>
 </body>
 </html>

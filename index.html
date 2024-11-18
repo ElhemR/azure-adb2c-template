@@ -1,12 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}}</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+
+    .header-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container .logo {
+      max-height: 50px;
+    }
+
+    .welcome-message {
+      font-weight: bold;
+      font-size: 2.5rem;
+      letter-spacing: 0.625rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      word-break: break-word;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      .welcome-message {
+        font-size: 1.875rem;
+        letter-spacing: 0.094rem;
+        line-height: 1.1;
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .confirmation {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .confirmation input[type="checkbox"] {
+      margin-right: 10px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .confirmation input[type="checkbox"].error {
+      border-color: red;
+      outline: 2px solid red;
+      box-shadow: 0 0 5px red;
+    }
+
+    .confirmation label {
+      line-height: 1.2;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      color: #fff;
+      background: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .submit-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: #555;
+    }
+  </style>
+  <script src="https://azure-adb2c-template-dv03ak2ph-elhemrs-projects.vercel.app/custom-b2c.js" defer></script>
+</head>
 <body>
-    <h3 id="demo">Replace Me</h3>
-    <div id="api" role="main"></div>
-    <script defer>
-        console.log("Defer Action");
-        document.getElementById("demo").innerHTML = "Jabberwocky!";
-      console.log('test',    document.getElementById("api"))
-    </script> 
+  <!-- Header Section -->
+  <div class="header-container">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+  </div>
+
+  <!-- Welcome Message -->
+  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Title -->
+    <h1 class="title">{{HEADER_LABEL}}</h1>
+
+    <!-- Azure AD B2C Login Form Placeholder -->
+    <div id="api"></div>
+  </div>
 </body>
 </html>

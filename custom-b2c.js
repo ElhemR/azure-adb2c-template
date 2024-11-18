@@ -1,12 +1,7 @@
+console.log('Setting Background Dynamically...');
+
+// Set Background Dynamically
 document.addEventListener('DOMContentLoaded', () => {
-  const apiContainer = document.getElementById('api');
-
-  if (!apiContainer) {
-    console.error("The 'api' container is missing. Ensure the element with ID 'api' is present in the HTML.");
-    return;
-  }
-
-  // Set Background Dynamically
   const backgroundLoginImage = false; // Placeholder for the image URL
   const gradientBackground = `linear-gradient(145deg, 
         rgba(207, 174, 168, 0.3) 16%, 
@@ -19,21 +14,24 @@ document.addEventListener('DOMContentLoaded', () => {
     ? `url(${backgroundLoginImage}) no-repeat center/cover`
     : gradientBackground;
 
-  // Periodically check for the Azure AD B2C form to be injected
+  console.log('DOMContentLoaded...');
+  const label1 = document.createElement('label');
+  label1.appendChild(document.createTextNode('Welcome to the Login page @'));
+  document.body.appendChild(label1);
+
+  const apiContainer = document.getElementById('api');
+
+  if (!apiContainer) {
+    console.error("The 'api' container is missing. Ensure the element with ID 'api' is present in the HTML.");
+    return;
+  }
+
   const checkForForm = setInterval(() => {
     const b2cForm = apiContainer.querySelector('form');
 
     if (b2cForm) {
-      clearInterval(checkForForm); // Stop checking once the form is found
+      clearInterval(checkForForm);
 
-      // Dynamically update labels
-      const emailLabel = b2cForm.querySelector('label[for="email"]');
-      if (emailLabel) emailLabel.textContent = "{{EMAIL_LABEL}}";
-
-      const passwordLabel = b2cForm.querySelector('label[for="password"]');
-      if (passwordLabel) passwordLabel.textContent = "{{PASSWORD_LABEL}}";
-
-      // Add a confirmation checkbox
       const confirmationGroup = document.createElement('div');
       confirmationGroup.className = 'confirmation';
 
@@ -49,21 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
       confirmationGroup.appendChild(confirmationCheckbox);
       confirmationGroup.appendChild(confirmationLabel);
 
-      // Add the confirmation group above the submit button
       const submitButton = b2cForm.querySelector('button[type="submit"]');
       if (submitButton) {
-        submitButton.disabled = true; // Initially disable the submit button
+        submitButton.disabled = true;
         b2cForm.insertBefore(confirmationGroup, submitButton);
 
-        // Add checkbox event listener to toggle submit button
         confirmationCheckbox.addEventListener('change', () => {
           submitButton.disabled = !confirmationCheckbox.checked;
         });
       }
 
-      console.log("B2C form enhanced with dynamic labels and checkbox.");
+      console.log("Confirmation checkbox and label appended successfully.");
     } else {
       console.log("Waiting for Azure AD B2C form to load...");
     }
-  }, 500); // Check every 500ms
+  }, 500);
 });

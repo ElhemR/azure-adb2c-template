@@ -11,12 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <!-- Script for Dynamic Testing -->
-    <script>
-        $(document).ready(function () {
-            console.log("Custom page loaded. Ready for Azure AD B2C integration.");
-        });
-    </script>    
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,6 +49,31 @@
             background-color: #005a9e;
         }
     </style>
+
+    <script>
+        $(document).ready(function () {
+            console.log("Custom page loaded. Waiting for Azure AD B2C to inject content...");
+
+            // Monitor the #api div for changes
+            const apiDiv = document.getElementById("api");
+            console.log('Test', apiDiv)
+            // Create a MutationObserver to detect changes in #api
+            const observer = new MutationObserver((mutationsList) => {
+                for (const mutation of mutationsList) {
+                    if (mutation.type === "childList") {
+                        console.log("Azure AD B2C has injected content into #api:");
+                        console.log(apiDiv.innerHTML); // Print the content of the #api div
+                    }
+                }
+            });
+
+            // Configure and observe the #api div
+            observer.observe(apiDiv, {
+                childList: true, // Listen for child node changes
+                subtree: true    // Include all descendant nodes
+            });
+        });
+    </script>
 </head>
 <body>
     <!-- Simulate Injected Controls -->
@@ -81,7 +101,5 @@
             <button class="btn btn-dark btn-block">Sign in with GitHub</button>
         </div>
     </div>
-
-  
 </body>
 </html>

@@ -1,162 +1,149 @@
+@model dynamic
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@ViewData["Language"]">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{PAGE_TITLE}}</title>
-  <style>
-    /* General Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["PageTitle"]</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      height: 100vh;
-      margin: 0;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background: url('@ViewData["BackgroundImage"]') no-repeat center center fixed;
+            background-size: cover;
+        }
 
-    .header-container {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-    .header-container .logo {
-      max-height: 50px;
-    }
+        .header .logo img {
+            height: 40px;
+        }
 
-    .welcome-message {
-      font-weight: bold;
-      font-size: 2.5rem;
-      letter-spacing: 0.625rem;
-      line-height: 1.2;
-      text-transform: uppercase;
-      word-break: break-word;
-      text-align: center;
-      margin: 20px 0;
-    }
+        .header .language-dropdown select {
+            font-size: 14px;
+            padding: 5px 10px;
+        }
 
-    @media (max-width: 600px) {
-      .welcome-message {
-        font-size: 1.875rem;
-        letter-spacing: 0.094rem;
-        line-height: 1.1;
-      }
-    }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px);
+        }
 
-    .container {
-      width: 100%;
-      max-width: 640px;
-      margin: 20px auto;
-      padding: 20px;
-      text-align: center;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        .form-box {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
 
-    .title {
-      font-size: 1.8rem;
-      color: #333;
-      margin-bottom: 15px;
-    }
+        .form-box h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
 
-    .form-group {
-      margin-bottom: 15px;
-      text-align: left;
-    }
+        .form-box form {
+            display: flex;
+            flex-direction: column;
+        }
 
-    .form-group label {
-      display: block;
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-      color: #333;
-    }
+        .form-box label {
+            margin-bottom: 5px;
+            text-align: left;
+        }
 
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+        .form-box input[type="email"],
+        .form-box input[type="password"],
+        .form-box button {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
 
-    .confirmation {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      margin-top: 15px;
-      font-size: 0.9rem;
-      color: #333;
-    }
+        .form-box button {
+            background: #0078d4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-    .confirmation input[type="checkbox"] {
-      margin-right: 10px;
-      width: 18px;
-      height: 18px;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-    }
+        .form-box button:hover {
+            background: #005a9e;
+        }
 
-    .confirmation input[type="checkbox"].error {
-      border-color: red;
-      outline: 2px solid red;
-      box-shadow: 0 0 5px red;
-    }
+        .form-box .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    .confirmation label {
-      line-height: 1.2;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      color: #fff;
-      background: #333;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .submit-btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-
-    .submit-btn:hover:not(:disabled) {
-      background: #555;
-    }
-  </style>
-  <script src="https://azure-adb2c-template-dv03ak2ph-elhemrs-projects.vercel.app/custom-b2c.js" defer></script>
+        .form-box .checkbox-container input {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-  <!-- Header Section -->
-  <div class="header-container">
-    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
-  </div>
 
-  <!-- Welcome Message -->
-  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
+    <!-- Header Section -->
+    <div class="header">
+        <div class="logo">
+            <img src="@ViewData["Logo"]" alt="Logo">
+        </div>
+        <div class="language-dropdown">
+            <select id="language-selector" name="language" onchange="changeLanguage(this)">
+                @foreach (var lang in ViewData["AvailableLanguages"] as List<string>)
+                {
+                    <option value="@lang" @(lang == ViewData["CurrentLanguage"] ? "selected" : "")>@lang</option>
+                }
+            </select>
+        </div>
+    </div>
 
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Title -->
-    <h1 class="title">{{HEADER_LABEL}}</h1>
+    <!-- Form Section -->
+    <div class="form-container">
+        <div class="form-box">
+            <h1>@ViewData["Title"]</h1>
+            <form method="post" action="@ViewData["FormAction"]">
+                <label for="email">@ViewData["EmailLabel"]</label>
+                <input type="email" name="email" id="email" required>
 
-    <!-- Azure AD B2C Login Form Placeholder -->
-    <div id="api"></div>
-  </div>
+                <label for="password">@ViewData["PasswordLabel"]</label>
+                <input type="password" name="password" id="password" required>
+
+                <!-- Checkbox for Age Verification -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="under18" name="under18" required>
+                    <label for="under18">@ViewData["Under18Label"]</label>
+                </div>
+
+                <button type="submit">@ViewData["SubmitButtonLabel"]</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function changeLanguage(selector) {
+            const selectedLanguage = selector.value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', selectedLanguage);
+            window.location.href = url.toString();
+        }
+    </script>
 </body>
 </html>

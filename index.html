@@ -51,14 +51,32 @@
     </style>
 
     <script defer>
-        $(document).ready(function () {
-            console.log("Custom page loaded. Waiting for Azure AD B2C to inject content...");
+window.addEventListener("load", function () {
+    console.log("Page fully loaded. Checking for Azure AD B2C content...");
 
-            // Monitor the #api div for changes
-            const apiDiv = document.getElementById("api");
-            console.log('Test', apiDiv)
-        
-        });
+    const apiDiv = document.getElementById("api");
+
+    if (!apiDiv) {
+        console.error("#api div not found in the DOM.");
+        return;
+    }
+
+    // Check if the #api div has content
+    const checkApiContent = () => {
+        const content = apiDiv.innerHTML.trim();
+        if (content) {
+            console.log("Azure AD B2C content injected into #api:");
+            console.log(content); // Log the injected content
+        } else {
+            console.log("Still waiting for Azure AD B2C content...");
+            setTimeout(checkApiContent, 100); // Retry after 100ms
+        }
+    };
+
+    // Start checking for content
+    checkApiContent();
+});
+
     </script>
 </head>
 <body>

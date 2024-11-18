@@ -48,7 +48,8 @@
     }
   </style>
   <script>
-     console.log('Set Background Dynamically...') 
+    console.log('Setting Background Dynamically...');
+
     // Set Background Dynamically
     const backgroundLoginImage = false; // Placeholder for the image URL
     const gradientBackground = `linear-gradient(145deg, 
@@ -61,27 +62,7 @@
     document.body.style.background = backgroundLoginImage
       ? `url(${backgroundLoginImage}) no-repeat center/cover`
       : gradientBackground;
-  </script>
-</head>
-<body>
-  <!-- Header Section -->
-  <div class="header-container">
-    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
-  </div>
 
-  <!-- Welcome Message -->
-  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
-
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Title -->
-    <h1 class="title">{{HEADER_LABEL}}</h1>
-
-    <!-- Azure AD B2C Login Form Placeholder -->
-    <div id="api"></div>
-  </div>
-
-  <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Append dynamic label to the body
       const label1 = document.createElement('label');
@@ -138,5 +119,23 @@
       }, 500); // Check every 500ms
     });
   </script>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header-container">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+  </div>
+
+  <!-- Welcome Message -->
+  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Title -->
+    <h1 class="title">{{HEADER_LABEL}}</h1>
+
+    <!-- Azure AD B2C Login Form Placeholder -->
+    <div id="api"></div>
+  </div>
 </body>
 </html>

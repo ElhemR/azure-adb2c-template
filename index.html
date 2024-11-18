@@ -21,6 +21,76 @@
       background-position: center center;
     }
 
+    .header-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container .logo {
+      max-height: 50px;
+    }
+
+    .welcome-message {
+      font-weight: bold;
+      font-size: 2.5rem;
+      letter-spacing: 0.625rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      word-break: break-word;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      .welcome-message {
+        font-size: 1.875rem;
+        letter-spacing: 0.094rem;
+        line-height: 1.1;
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
     .confirmation {
       display: flex;
       align-items: center;
@@ -38,13 +108,35 @@
       border-radius: 4px;
     }
 
+    .confirmation input[type="checkbox"].error {
+      border-color: red;
+      outline: 2px solid red;
+      box-shadow: 0 0 5px red;
+    }
+
     .confirmation label {
       line-height: 1.2;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      color: #fff;
+      background: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
     }
 
     .submit-btn:disabled {
       background: #ccc;
       cursor: not-allowed;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: #555;
     }
   </style>
   <script>
@@ -65,6 +157,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       // Append dynamic label to the body
+      console.log('DOMContentLoaded...');
       const label1 = document.createElement('label');
       label1.appendChild(document.createTextNode('Welcome to the Login page @'));
       document.body.appendChild(label1);

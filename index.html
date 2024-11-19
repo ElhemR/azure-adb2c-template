@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{PAGE_TITLE}}</title>
-<style>
+  <style>
     /* General Reset */
     * {
       margin: 0;
@@ -91,6 +91,24 @@
       border-radius: 4px;
     }
 
+    .password-toggle {
+      position: relative;
+    }
+
+    .password-toggle input {
+      padding-right: 40px;
+    }
+
+    .password-toggle .toggle-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1rem;
+      color: #333;
+    }
+
     .confirmation {
       display: flex;
       align-items: center;
@@ -106,12 +124,6 @@
       height: 18px;
       border: 2px solid #ccc;
       border-radius: 4px;
-    }
-
-    .confirmation input[type="checkbox"].error {
-      border-color: red;
-      outline: 2px solid red;
-      box-shadow: 0 0 5px red;
     }
 
     .confirmation label {
@@ -189,7 +201,30 @@
             });
           }
 
-          console.log("B2C form enhanced with dynamic labels and checkbox.");
+          // Replace heading content
+          const heading = b2cForm.find('h1[role="heading"]');
+          if (heading.length) {
+            heading.text('{{LOGIN_HEADING_LABEL}}');
+          }
+
+          // Remove the intro div
+          const introDiv = b2cForm.find('.intro');
+          if (introDiv.length) {
+            introDiv.remove();
+          }
+
+          // Add password toggle functionality
+          const passwordField = b2cForm.find('#password');
+          const toggleIcon = $('<span class="toggle-icon">👁️</span>');
+          passwordField.after(toggleIcon);
+
+          toggleIcon.on('click', function () {
+            const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+            passwordField.attr('type', type);
+            $(this).text(type === 'password' ? '👁️' : '🙈');
+          });
+
+          console.log("B2C form enhanced with dynamic labels, heading, checkbox, and password toggle.");
         } else {
           console.log("Waiting for Azure AD B2C form to load...");
         }

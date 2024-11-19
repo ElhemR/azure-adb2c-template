@@ -1,149 +1,15 @@
-@model dynamic
-
 <!DOCTYPE html>
-<html lang="@ViewData["Language"]">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["PageTitle"]</title>
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: #333;
-            background: url('@ViewData["BackgroundImage"]') no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: white;
-            padding: 10px 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header .logo img {
-            height: 40px;
-        }
-
-        .header .language-dropdown select {
-            font-size: 14px;
-            padding: 5px 10px;
-        }
-
-        .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 60px);
-        }
-
-        .form-box {
-            background: white;
-            padding: 30px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .form-box h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .form-box form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-box label {
-            margin-bottom: 5px;
-            text-align: left;
-        }
-
-        .form-box input[type="email"],
-        .form-box input[type="password"],
-        .form-box button {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            width: 100%;
-        }
-
-        .form-box button {
-            background: #0078d4;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .form-box button:hover {
-            background: #005a9e;
-        }
-
-        .form-box .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .form-box .checkbox-container input {
-            margin-right: 10px;
-        }
-    </style>
+    <title>Login</title>
+   <script>
+        var label = document.createElement('label');
+         label.appendChild(document.createTextNode('Welcome to the Login page @')); 
+         document.body.appendChild(label);
+    </script>
 </head>
 <body>
-
-    <!-- Header Section -->
-    <div class="header">
-        <div class="logo">
-            <img src="@ViewData["Logo"]" alt="Logo">
-        </div>
-        <div class="language-dropdown">
-            <select id="language-selector" name="language" onchange="changeLanguage(this)">
-                @foreach (var lang in ViewData["AvailableLanguages"] as List<string>)
-                {
-                    <option value="@lang" @(lang == ViewData["CurrentLanguage"] ? "selected" : "")>@lang</option>
-                }
-            </select>
-        </div>
-    </div>
-
-    <!-- Form Section -->
-    <div class="form-container">
-        <div class="form-box">
-            <h1>@ViewData["Title"]</h1>
-            <form method="post" action="@ViewData["FormAction"]">
-                <label for="email">@ViewData["EmailLabel"]</label>
-                <input type="email" name="email" id="email" required>
-
-                <label for="password">@ViewData["PasswordLabel"]</label>
-                <input type="password" name="password" id="password" required>
-
-                <!-- Checkbox for Age Verification -->
-                <div class="checkbox-container">
-                    <input type="checkbox" id="under18" name="under18" required>
-                    <label for="under18">@ViewData["Under18Label"]</label>
-                </div>
-
-                <button type="submit">@ViewData["SubmitButtonLabel"]</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        function changeLanguage(selector) {
-            const selectedLanguage = selector.value;
-            const url = new URL(window.location.href);
-            url.searchParams.set('lang', selectedLanguage);
-            window.location.href = url.toString();
-        }
-    </script>
+<div id="api"></div>         
 </body>
 </html>
+

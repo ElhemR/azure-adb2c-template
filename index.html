@@ -19,7 +19,6 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      visibility: hidden; /* Hide the page initially */
     }
 
     .header-container {
@@ -71,64 +70,208 @@
       color: #333;
       margin-bottom: 15px;
     }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .password-toggle {
+      position: relative;
+    }
+
+    .password-toggle input {
+      padding-right: 40px;
+    }
+
+    .password-toggle .toggle-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .confirmation {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .confirmation input[type="checkbox"] {
+      margin-right: 10px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .confirmation label {
+      line-height: 1.2;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      color: #fff;
+      background: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .submit-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: #555;
+    }
   </style>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script>
     $(document).ready(function () {
-      // Mock the fetch response
-      const mockFetchResponse = async (url) => {
-        console.log(`Mock fetch called for URL: ${url}`);
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({
-              json: () => ({
-                pageTitle: "Custom Page",
-                logoUrl: "https://example.com/logo.png",
-                welcomeMessage: "Welcome to Our Platform",
-                headerLabel: "Sign In to Continue",
-                backgroundImageUrl: "https://example.com/bg-image.jpg"
-              }),
-            });
-          }, 1000); // Simulate network delay
-        });
-      };
-
+      // Print all query parameters
       const params = new URLSearchParams(window.location.search);
-      const url = params.get("url") || "https://mock-api.com/config"; // Default mock URL
+      console.log("Query Parameters:");
+      params.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+       const url = params.get("url");
+  if (!url) {
+    console.error("No URL parameter found in query string.");
+    return;
+  } 
 
-      console.log(`Fetching data from: ${url}`);
+ console.log(`Fetching data from: ${url}`);
 
-      async function fetchData() {
-        try {
-          const response = await mockFetchResponse(url);
-          const data = await response.json();
-          console.log("Fetched JSON:", data);
-
-          // Replace placeholders with dynamic data
-          document.title = data.pageTitle || "Default Title";
-          $(".logo").attr("src", data.logoUrl);
-          $(".welcome-message").text(data.welcomeMessage);
-          $(".title").text(data.headerLabel);
-
-          // Set background image
-          $("body").css("background", `url(${data.backgroundImageUrl}) no-repeat center/cover`);
-          
-          // Make the page visible after placeholders are replaced
-          $("body").css("visibility", "visible");
-        } catch (error) {
-          console.error("Error fetching data:", error.message);
-          $("body").css("visibility", "visible"); // Show page even if fetch fails
-        }
+  // Use an async function to fetch data
+  async function fetchData() {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
       }
 
-      fetchData();
+      const json = await response.json();
+      console.log("Fetched JSON:", json);
+
+      // Example: Dynamically update the UI with fetched data
+      if (json.message) {
+        $(".welcome-message").text(json.message);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  }
+
+  // Call the async function
+  fetchData();
+      // Set the background dynamically
+      const backgroundLoginImage = false; // Placeholder for the image URL
+      const gradientBackground = `linear-gradient(145deg, 
+            rgba(207, 174, 168, 0.3) 16%, 
+            rgba(139, 188, 188, 0.3) 45%, 
+            rgba(100, 193, 195, 0.3) 60%, 
+            rgba(73, 184, 161, 0.3) 80%, 
+            rgba(80, 178, 104, 0.3) 98%)`;
+
+      $('body').css('background', backgroundLoginImage
+        ? `url(${backgroundLoginImage}) no-repeat center/cover`
+        : gradientBackground);
+
+      // Periodically check for the Azure AD B2C form to be injected
+      const checkForForm = setInterval(() => {
+        const b2cForm = $('#api').find('form');
+
+        if (b2cForm.length) {
+          clearInterval(checkForForm); // Stop checking once the form is found
+
+          // Dynamically update labels
+          const emailLabel = b2cForm.find('label[for="email"]');
+          if (emailLabel.length) emailLabel.text("{{EMAIL_LABEL}}");
+
+          const passwordLabel = b2cForm.find('label[for="password"]');
+          if (passwordLabel.length) passwordLabel.text("{{PASSWORD_LABEL}}");
+
+          // Add a confirmation checkbox
+          const confirmationGroup = $(`
+            <div class="confirmation">
+              <input type="checkbox" id="dynamic-confirmation-checkbox" name="confirmation">
+              <label for="dynamic-confirmation-checkbox">{{CONFIRMATION_TEXT}}</label>
+            </div>
+          `);
+
+          // Add the confirmation group above the submit button
+          const submitButton = b2cForm.find('button[type="submit"]');
+          if (submitButton.length) {
+            submitButton.prop('disabled', true); // Initially disable the submit button
+            confirmationGroup.insertBefore(submitButton);
+
+            // Add checkbox event listener to toggle submit button
+            confirmationGroup.find('input').on('change', function () {
+              submitButton.prop('disabled', !$(this).is(':checked'));
+            });
+          }
+
+          // Replace heading content
+          const heading = b2cForm.find('h1[role="heading"]');
+          if (heading.length) {
+            heading.text('{{LOGIN_HEADING_LABEL}}');
+          }
+
+          // Remove the intro div
+          const introDiv = b2cForm.find('.intro');
+          if (introDiv.length) {
+            introDiv.remove();
+          }
+
+          // Add password toggle functionality
+          const passwordField = b2cForm.find('#password');
+          const toggleIcon = $('<span class="toggle-icon">👁️</span>');
+          passwordField.after(toggleIcon);
+
+          toggleIcon.on('click', function () {
+            const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+            passwordField.attr('type', type);
+            $(this).text(type === 'password' ? '👁️' : '🙈');
+          });
+
+          console.log("B2C form enhanced with dynamic labels, heading, checkbox, and password toggle.");
+        } else {
+          console.log("Waiting for Azure AD B2C form to load...");
+        }
+      }, 500); // Check every 500ms
     });
   </script>
 </head>
 <body>
   <!-- Header Section -->
   <div class="header-container">
-    <img src="{{LOGO_URL}}" alt="Logo" class="logo">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
   </div>
 
   <!-- Welcome Message -->
@@ -138,6 +281,9 @@
   <div class="container">
     <!-- Title -->
     <h1 class="title">{{HEADER_LABEL}}</h1>
+
+    <!-- Azure AD B2C Login Form Placeholder -->
+    <div id="api"></div>
   </div>
 </body>
 </html>

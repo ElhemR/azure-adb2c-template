@@ -1,66 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Sign In</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}}</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer></script>
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+    .header-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container .logo {
+      max-height: 50px;
+    }
+
+    .welcome-message {
+      font-weight: bold;
+      font-size: 2.5rem;
+      letter-spacing: 0.625rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      word-break: break-word;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      .welcome-message {
+        font-size: 1.875rem;
+        letter-spacing: 0.094rem;
+        line-height: 1.1;
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      font-size: 1.8rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .confirmation {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .confirmation input[type="checkbox"] {
+      margin-right: 10px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .confirmation input[type="checkbox"].error {
+      border-color: red;
+      outline: 2px solid red;
+      box-shadow: 0 0 5px red;
+    }
+
+    .confirmation label {
+      line-height: 1.2;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      color: #fff;
+      background: #333;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .submit-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: #555;
+    }
+  </style>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      const apiContainer = document.getElementById('api');
+
+      if (!apiContainer) {
+        console.error("The 'api' container is missing. Ensure the element with ID 'api' is present in the HTML.");
+        return;
+      }
+
+      // Set Background Dynamically
+      const backgroundLoginImage = false; // Placeholder for the image URL
+      const gradientBackground = `linear-gradient(145deg, 
+            rgba(207, 174, 168, 0.3) 16%, 
+            rgba(139, 188, 188, 0.3) 45%, 
+            rgba(100, 193, 195, 0.3) 60%, 
+            rgba(73, 184, 161, 0.3) 80%, 
+            rgba(80, 178, 104, 0.3) 98%)`;
+
+      document.body.style.background = backgroundLoginImage
+        ? `url(${backgroundLoginImage}) no-repeat center/cover`
+        : gradientBackground;
+
+      // Periodically check for the Azure AD B2C form to be injected
+      const checkForForm = setInterval(() => {
+        const b2cForm = apiContainer.querySelector('form');
+
+        if (b2cForm) {
+          clearInterval(checkForForm); // Stop checking once the form is found
+
+          // Dynamically update labels
+          const emailLabel = b2cForm.querySelector('label[for="email"]');
+          if (emailLabel) emailLabel.textContent = "{{EMAIL_LABEL}}";
+
+          const passwordLabel = b2cForm.querySelector('label[for="password"]');
+          if (passwordLabel) passwordLabel.textContent = "{{PASSWORD_LABEL}}";
+
+          // Add a confirmation checkbox
+          const confirmationGroup = document.createElement('div');
+          confirmationGroup.className = 'confirmation';
+
+          const confirmationCheckbox = document.createElement('input');
+          confirmationCheckbox.type = 'checkbox';
+          confirmationCheckbox.id = 'dynamic-confirmation-checkbox';
+          confirmationCheckbox.name = 'confirmation';
+
+          const confirmationLabel = document.createElement('label');
+          confirmationLabel.htmlFor = 'dynamic-confirmation-checkbox';
+          confirmationLabel.textContent = "{{CONFIRMATION_TEXT}}";
+
+          confirmationGroup.appendChild(confirmationCheckbox);
+          confirmationGroup.appendChild(confirmationLabel);
+
+          // Add the confirmation group above the submit button
+          const submitButton = b2cForm.querySelector('button[type="submit"]');
+          if (submitButton) {
+            submitButton.disabled = true; // Initially disable the submit button
+            b2cForm.insertBefore(confirmationGroup, submitButton);
+
+            // Add checkbox event listener to toggle submit button
+            confirmationCheckbox.addEventListener('change', () => {
+              submitButton.disabled = !confirmationCheckbox.checked;
+            });
+          }
+
+          console.log("B2C form enhanced with dynamic labels and checkbox.");
+        } else {
+          console.log("Waiting for Azure AD B2C form to load...");
         }
-
-        .form-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .form-container h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background-color: #0078d4;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #005a9e;
-        }
-    </style>
-   <script src="https://temp.staticsave.com/673ba1ec5cf54.js" defer></script>
-
+      }, 500); // Check every 500ms
+    });
+  </script>
 </head>
 <body>
-    <!-- Simulate Injected Controls -->
-    <div class="form-container">
-        <h1>Custom Sign In</h1>
-        <!-- The div below is where Azure AD B2C will inject controls -->
-        <div id="api"></div>
+  <!-- Header Section -->
+  <div class="header-container">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+  </div>
 
-    </div>
+  <!-- Welcome Message -->
+  <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
 
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Title -->
+    <h1 class="title">{{HEADER_LABEL}}</h1>
 
+    <!-- Azure AD B2C Login Form Placeholder -->
+    <div id="api"></div>
+  </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log("JavaScript is working!");
+    });
+  </script>
 </body>
 </html>

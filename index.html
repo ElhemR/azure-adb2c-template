@@ -154,6 +154,13 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script>
     $(document).ready(function () {
+      // Print all query parameters
+      const params = new URLSearchParams(window.location.search);
+      console.log("Query Parameters:");
+      params.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+      
       // Set the background dynamically
       const backgroundLoginImage = false; // Placeholder for the image URL
       const gradientBackground = `linear-gradient(145deg, 

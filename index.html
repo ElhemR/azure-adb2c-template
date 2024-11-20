@@ -3,34 +3,24 @@
 <head>
     <title>Login</title>
     <script defer>
-        function onLoad() {
-            console.log('Test')
-                 const targetDiv = document.getElementById("api");
-                console.log('t', targetDiv)
-    alert('hello, world!');
-            }
-    onLoad();
-        
-        window.onload = function () {
-            const targetDiv = document.getElementById("api");
-                console.log('t', targetDiv)
-            // Use a periodic check to detect injected content
-            const checkInterval = setInterval(() => {
-                if (targetDiv && targetDiv.children.length > 0) {
-                    console.log("Content injected into #api:", targetDiv.innerHTML);
 
-                    // Access or process the injected children
-                    const children = Array.from(targetDiv.children);
-                    children.forEach(child => {
-                        console.log("Child element:", child);
-                        // Perform any further processing
-                    });
+   var observer = new MutationObserver(() => {
+      var apiElement = document.getElementById('api');
+      if (apiElement) {
+         init(apiElement);
+         observer.disconnect();
+      }
+   });
+   observer.observe(document, { attributes: false, childList: true, characterData: false, subtree: true });
 
-                    // Stop checking once content is detected
-                    clearInterval(checkInterval);
-                }
-            }, 100); // Check every 100ms
-        };
+
+
+   function init(apiElement) {
+      // do your stuff here
+
+      console.log("api div is rendered", apiElement);
+   }
+
     </script>
 </head>
 <body>

@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
-    <script defer>
-
-   var observer = new MutationObserver(() => {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Login</title>
+  <style>
+    /* Add your styles here */
+  </style>
+  <script defer>
+    var observer = new MutationObserver(() => {
       var apiElement = document.getElementById('api');
       if (apiElement) {
          init(apiElement);
@@ -13,17 +18,158 @@
    });
    observer.observe(document, { attributes: false, childList: true, characterData: false, subtree: true });
 
-
-
-   function init(apiElement) {
-      // do your stuff here
-
+   async function init(apiElement) {
       console.log("api div is rendered", apiElement);
-   }
 
-    </script>
+      const baseUrl = "https://www.dev.jti-connexus.com/";
+      const params = new URLSearchParams(window.location.search);
+      const apiUrl = params.get("url");
+
+      if (!apiUrl) {
+         document.body.classList.add("show-content");
+         return;
+      }
+
+      try {
+         const response = await fetch(apiUrl);
+         if (!response.ok) throw new Error(`Response status: ${response.status}`);
+         const data = await response.json();
+
+         const props = data.props || {};
+         const loginForm = props.loginForm || {};
+         const generalSettings = data.appFrame?.settings?.general || {};
+
+         // Update title
+         if (props.pageTitle) {
+            document.title = props.pageTitle;
+            const welcomeMessage = document.querySelector(".welcome-message");
+            if (welcomeMessage) welcomeMessage.textContent = props.pageTitle;
+         }
+
+         // Update corners style
+         if (generalSettings.corners === "edgy") {
+            document.documentElement.style.setProperty("--radius-button", "0");
+         } else {
+            document.documentElement.style.setProperty("--radius-button", "4px");
+         }
+
+         // Populate email field
+         const emailElement = loginForm.elements.find(el => el.id === "emailAddress");
+         if (emailElement) {
+            const emailLabel = apiElement.querySelector("label[for='email']");
+            const emailInput = apiElement.querySelector("input#email");
+            if (emailLabel && emailInput) {
+               emailLabel.textContent = `${emailElement.placeholder}${emailElement.required ? " *" : ""}`;
+               emailInput.placeholder = emailElement.placeholder;
+            }
+         }
+
+         // Populate password field
+         const passwordElement = loginForm.elements.find(el => el.id === "password");
+         if (passwordElement) {
+            const passwordField = apiElement.querySelector("input#password");
+            const passwordLabel = apiElement.querySelector("label[for='password']");
+            if (passwordField && passwordLabel) {
+               passwordLabel.textContent = `${passwordElement.placeholder}${passwordElement.required ? " *" : ""}`;
+
+               const wrapper = document.createElement("div");
+               wrapper.classList.add("password-wrapper");
+               passwordField.parentNode.insertBefore(wrapper, passwordField);
+               wrapper.appendChild(passwordField);
+
+               const toggleIcon = document.createElement("span");
+               toggleIcon.classList.add("material-icons", "toggle-icon");
+               toggleIcon.textContent = "visibility";
+               wrapper.appendChild(toggleIcon);
+
+               toggleIcon.addEventListener("click", () => {
+                  const isPassword = passwordField.type === "password";
+                  passwordField.type = isPassword ? "text" : "password";
+                  toggleIcon.textContent = isPassword ? "visibility_off" : "visibility";
+               });
+            }
+         }
+
+         // Handle error container
+         const errorDiv = document.querySelector(".error.pageLevel");
+         if (errorDiv) {
+            const contentWrapper = document.createElement("div");
+            contentWrapper.classList.add("content-wrapper");
+            contentWrapper.style.display = "flex";
+            contentWrapper.style.alignItems = "center";
+            contentWrapper.style.justifyContent = "space-between";
+
+            const errorMessage = errorDiv.querySelector("p");
+            if (errorMessage) {
+               contentWrapper.appendChild(errorMessage);
+               const closeIcon = document.createElement("span");
+               closeIcon.classList.add("material-icons", "close-icon");
+               closeIcon.textContent = "close";
+
+               closeIcon.addEventListener("click", () => {
+                  errorDiv.style.display = "none";
+               });
+
+               contentWrapper.appendChild(closeIcon);
+               errorDiv.appendChild(contentWrapper);
+            }
+         }
+
+         // Update submit button
+         const submitButton = apiElement.querySelector("button[type='submit']");
+         if (submitButton && loginForm.buttonLabel) {
+            submitButton.textContent = loginForm.buttonLabel;
+         }
+
+         // Add confirmation checkbox
+         const legalAgeElement = loginForm.elements.find(el => el.id === "legalAge");
+         if (legalAgeElement && legalAgeElement.required) {
+            const confirmationGroup = document.createElement("div");
+            confirmationGroup.classList.add("confirmation");
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = "dynamic-confirmation-checkbox";
+            confirmationGroup.appendChild(checkbox);
+
+            const label = document.createElement("label");
+            label.htmlFor = "dynamic-confirmation-checkbox";
+            label.textContent = `${legalAgeElement.placeholder}${legalAgeElement.required ? " *" : ""}`;
+            confirmationGroup.appendChild(label);
+
+            if (submitButton) {
+               submitButton.disabled = true;
+               confirmationGroup.addEventListener("change", () => {
+                  submitButton.disabled = !checkbox.checked;
+               });
+
+               submitButton.parentNode.insertBefore(confirmationGroup, submitButton);
+            }
+         }
+
+         // Show content
+         document.body.classList.add("show-content");
+      } catch (error) {
+         console.error("Error fetching data:", error.message);
+         document.body.classList.add("show-content");
+      }
+   }
+  </script>
 </head>
 <body>
-    <div id="api"></div>         
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  <div class="header-container">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+  </div>
+  <div class="main-container">  
+    <div class="welcome-message">{{WELCOME_MESSAGE}}</div>
+    <div class="container">
+      <div id="api">
+        <!-- Form content dynamically injected here -->
+      </div>
+    </div>
+  </div>
 </body>
 </html>

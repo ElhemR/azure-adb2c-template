@@ -2,13 +2,30 @@
 <html>
 <head>
     <title>Login</title>
-   <script>
-        var label = document.createElement('label');
-         label.appendChild(document.createTextNode('Welcome to the Login page @')); 
-         document.body.appendChild(label);
+    <script defer>
+        window.onload = function () {
+            const targetDiv = document.getElementById("api");
+                console.log('t', targetDiv)
+            // Use a periodic check to detect injected content
+            const checkInterval = setInterval(() => {
+                if (targetDiv && targetDiv.children.length > 0) {
+                    console.log("Content injected into #api:", targetDiv.innerHTML);
+
+                    // Access or process the injected children
+                    const children = Array.from(targetDiv.children);
+                    children.forEach(child => {
+                        console.log("Child element:", child);
+                        // Perform any further processing
+                    });
+
+                    // Stop checking once content is detected
+                    clearInterval(checkInterval);
+                }
+            }, 100); // Check every 100ms
+        };
     </script>
 </head>
 <body>
-<div id="api"></div>         
+    <div id="api"></div>         
 </body>
 </html>

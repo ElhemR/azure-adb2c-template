@@ -417,7 +417,7 @@
 
             const label = document.createElement("label");
             label.htmlFor = "dynamic-confirmation-checkbox";
-            label.textContent = `${legalAgeElement.placeholder}${legalAgeElement.required ? " *" : ""}`;
+            label.innerHTML = `${legalAgeElement.placeholder}${legalAgeElement.required ? " *" : ""}`;
             confirmationGroup.appendChild(label);
 
             if (submitButton) {

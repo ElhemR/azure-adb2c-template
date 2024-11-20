@@ -403,32 +403,53 @@
          if (submitButton && loginForm.buttonLabel) {
             submitButton.textContent = loginForm.buttonLabel;
          }
+        if (submitButton) {
+  submitButton.disabled = true; // Initially disable the button
 
-         // Add confirmation checkbox
-         const legalAgeElement = loginForm.elements.find(el => el.id === "legalAge");
-         if (legalAgeElement && legalAgeElement.required) {
-            const confirmationGroup = document.createElement("div");
-            confirmationGroup.classList.add("confirmation");
+  // Get all checkboxes from loginForm.elements
+  const checkboxes = loginForm.elements.filter(el => el.type === "checkbox" && el.required);
 
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.id = "dynamic-confirmation-checkbox";
-            confirmationGroup.appendChild(checkbox);
+  if (checkboxes.length > 0) {
+    const confirmationGroupContainer = document.createElement("div");
+    confirmationGroupContainer.classList.add("confirmation-group");
 
-            const label = document.createElement("label");
-            label.htmlFor = "dynamic-confirmation-checkbox";
-            label.innerHTML = `${legalAgeElement.placeholder}${legalAgeElement.required ? " *" : ""}`;
-            confirmationGroup.appendChild(label);
+    // Loop through each checkbox element and add it to the confirmation group
+    checkboxes.forEach((checkboxElement, index) => {
+      const confirmationGroup = document.createElement("div");
+      confirmationGroup.classList.add("confirmation");
 
-            if (submitButton) {
-               submitButton.disabled = true;
-               confirmationGroup.addEventListener("change", () => {
-                  submitButton.disabled = !checkbox.checked;
-               });
+      // Create the checkbox input
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = `dynamic-confirmation-checkbox-${index}`;
+      checkbox.name = checkboxElement.id;
+      confirmationGroup.appendChild(checkbox);
 
-               submitButton.parentNode.insertBefore(confirmationGroup, submitButton);
-            }
-         }
+      // Create the label for the checkbox
+      const label = document.createElement("label");
+      label.htmlFor = `dynamic-confirmation-checkbox-${index}`;
+      label.innerHTML = `${checkboxElement.placeholder}${checkboxElement.required ? " *" : ""}`;
+      confirmationGroup.appendChild(label);
+
+      // Add the confirmation group to the container
+      confirmationGroupContainer.appendChild(confirmationGroup);
+    });
+
+    // Insert the confirmation group container before the submit button
+    submitButton.parentNode.insertBefore(confirmationGroupContainer, submitButton);
+
+    // Add an event listener to each checkbox to check if all are checked
+    const checkboxesNodeList = confirmationGroupContainer.querySelectorAll("input[type='checkbox']");
+    checkboxesNodeList.forEach(checkbox => {
+      checkbox.addEventListener("change", () => {
+        const allChecked = Array.from(checkboxesNodeList).every(checkbox => checkbox.checked);
+        submitButton.disabled = !allChecked; // Enable/disable the submit button
+      });
+    });
+  }
+}
+
+     
 
          // Show content
          document.body.classList.add("show-content");

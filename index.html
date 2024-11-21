@@ -199,8 +199,25 @@
        height: 2rem;
        width: 2rem;
      }
+ 
     .confirmation {
-      display: flex;
+    display: grid;
+     grid-auto-flow: column;
+     grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
+     gap: 10px;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .confirmation input[type="checkbox"] {
+      margin-right: 10px;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 2px solid #ccc;
+      border-radius: 4px;
     }
 
     .spinner-container {

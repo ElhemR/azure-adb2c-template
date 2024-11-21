@@ -1,1 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Login</title>
+  <style>
+       :root {
+      --radius-button: 4px; 
+      --accent-color: #009089; 
+      --grey500: #272A3C; 
+    --grey400: #bdbdbd;
+    --grey200: #eeeeee;
+    --accent400: #009089;
+    --accent200: #009089;
+    }
+
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+  body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+   visibility: hidden; 
+}
+.show-content {
+  visibility: visible; 
+}
+.header-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.main-container {
+  flex: 1; /* Occupy all available space below the header */
+  width: 100%; /* Full width of the body */
+  background: linear-gradient(145deg, rgba(207, 174, 168, 0.3) 16%, rgba(139, 188, 188, 0.3) 45%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Ensure stacking context */
+}
+
+
+    .header-container .logo {
+      max-height: 50px;
+    }
+
+    .welcome-message {
+      font-weight: bold;
+      font-size: 2.5rem;
+      letter-spacing: 0.625rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      word-break: break-word;
+      text-align: center;
+      max-width: 640px;
+      margin: 20px 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: var(--radius-button);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    [role="heading"] {
+      color: #272a3c;
+      font-size: 1.25rem;
+      word-break: break-word;
+      font-family: Roboto, sans-serif;
+      font-weight: bold;
+      line-height: 1.4;
+      letter-spacing: 0.313rem;
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      color: #272a3c;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px 0;
+      font-size: 1.0625rem;
+      letter-spacing: 0.2px;
+      color: var(--grey500);
+      border: none;
+      border-bottom: 2px solid var(--grey500);
+    
+      outline: none;
+      background: transparent;
+    }
+
+    input:focus {
+      border-bottom-color: var(--accent-color) !important;
+    }
+
+    input:hover:not(:disabled):not(:focus) {
+      border-bottom-color: var(--accent-color);
+    }
+
+
+    .entry-item {
+      text-align:left;
+      margin-bottom: 1.5rem;
+    }
+     #next {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--grey500);
+    background-color: transparent;
+    border: 1px solid var(--grey500);
+    border-radius: var(--radius-button);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: none;
+    margin-top: 1rem;
+  }
+.password-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.password-wrapper input {
+  padding-right: 40px; /* Space for the toggle icon */
+}
+
+.password-wrapper .toggle-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--grey500);
+}
+
+  /* Hover state */
+   #next:hover {
+    background-color: transparent;
+    text-decoration: none;
+    box-shadow: 0 0 0 1px var(--grey500);
+  }
+
+  /* Focus state */
+   #next:focus {
+    background-color: transparent;
+    text-decoration: none;
+    box-shadow: 0 0 0 1px var(--grey500);
+  }
+
+  /* Active state */
+   #next:active {
+    background-color: rgba(158, 158, 158, 0.1); /* Faded grey500 */
+    color: var(--grey500);
+  }
+
+  /* Disabled state */
+   #next:disabled {
+    border: 1px solid var(--grey400);
+    color: var(--grey400);
+    cursor: not-allowed;
+  }
+     input[type="checkbox"] {
+       height: 2rem;
+       width: 2rem;
+     }
+ 
+    .confirmation {
+    display: grid;
+     grid-auto-flow: column;
+     grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
+     gap: 10px;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .confirmation input[type="checkbox"] {
+      margin-right: 10px;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  visibility: visible; /* Show spinner initially */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid var(--accent-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.show-content .spinner-container {
+  visibility: hidden; /* Hide spinner when content is ready */
+}
+   .error.pageLevel {
+  position: fixed; /* Fixed position at the bottom of the page */
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #DE2E21; /* Red background */
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-size: 1rem;
+  max-width: 90%; /* Responsive width */
+  text-align: left; /* Align text to the left */
+  display: none; /* Use flexbox for alignment */
+  align-items: center; /* Vertically align items */
+  justify-content: space-between; /* Space between text and icon */
+       animation: fadeInOut 4s ease-in-out; 
+}
+
+.error.pageLevel p {
+  margin: 0; /* Remove default margin from p */
+  flex: 1; /* Allow the text to take up remaining space */
+}
+
+.error.pageLevel .close-icon {
+  font-size: 1.5rem; /* Adjust icon size */
+  color: white; /* Icon color */
+  margin-left: 16px; /* Space between text and icon */
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+  cursor: pointer; /* Make it look interactive (optional) */
+}
+
+
+/* Fade-in and fade-out animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+    .error.itemLevel {
+      color: #DE2E21;
+    }
+  </style>
+  <script defer>
+    var observer = new MutationObserver(() => {
+      var apiElement = document.getElementById('api');
+      if (apiElement) {
+         init(apiElement);
+         observer.disconnect();
+      }
+   });
+   observer.observe(document, { attributes: false, childList: true, characterData: false, subtree: true });
+
+   async function init(apiElement) {
+      console.log("api div is rendered", apiElement);
+
+      const baseUrl = "https://www.dev.jti-connexus.com/";
+      const params = new URLSearchParams(window.location.search);
+      const apiUrl = params.get("url");
+
+      if (!apiUrl) {
+         document.body.classList.add("show-content");
+         return;
+      }
+    
+   }
+  </script>
+</head>
+<body>
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+  <div class="header-container">
+    <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+  </div>
+  <div class="main-container">  
+    <div class="container">
+      <div id="api">
+        <!-- Form content dynamically injected here -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>
 

@@ -1,32 +1,77 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-    
-    <title>Multi Factor Authentication</title>
 
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+  <title>Multi Factor Authentication</title>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+
+    }
+    .header-container {
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+    }
+
+    .main-container {
+        flex: 1; /* Occupy all available space below the header */
+        width: 100%; /* Full width of the body */
+        background: linear-gradient(145deg, rgba(207, 174, 168, 0.3) 16%, rgba(139, 188, 188, 0.3) 45%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative; /* Ensure stacking context */
+    }
+
+    .container {
+        width: 100%;
+        max-width: 400px;
+        background: #fff;
+        padding: 20px;
+        border-radius: var(--radius-button);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .header-container .logo {
+        max-height: 50px;
+    }
+
+</style>
 </head>
 <body>
-    <div id="background_branding_container" data-tenant-branding-background-color="true">
-      <img data-tenant-branding-background="true" src="https://login.microsoftonline.com/templates/src/backgrounds/1-1.png" alt="Illustration"/>
+<div class="header-container">
+  <img src="{{LOGO_URL}}" alt="{{LOGO_ALT}}" class="logo">
+</div>
+<div class="main-container">
+  <div class="container">
+    <div id="api" role="main">
+      <!-- Form content dynamically injected here -->
     </div>
-    <div class="container  phonefactor_container " role="presentation">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img class="companyLogo" data-tenant-branding-logo="true" src="https://login.microsoftonline.com/templates/src/images/logo.svg" alt="Company Logo">
-                        <div id="api" role="main">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
+</div>
+
 </body>
 </html>

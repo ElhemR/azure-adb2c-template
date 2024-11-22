@@ -311,25 +311,12 @@
   <script defer>
     var observer = new MutationObserver(() => {
       var apiElement = document.getElementById('api');
-      if (apiElement) {
-         init(apiElement);
-         observer.disconnect();
-      }
+       console.log('test', apiElement)
    });
    observer.observe(document, { attributes: false, childList: true, characterData: false, subtree: true });
 
    async function init(apiElement) {
       console.log("api div is rendered", apiElement);
-
-      const baseUrl = "https://www.dev.jti-connexus.com/";
-      const params = new URLSearchParams(window.location.search);
-      const apiUrl = params.get("url");
-
-      if (!apiUrl) {
-         document.body.classList.add("show-content");
-         return;
-      }
-    
    }
   </script>
 </head>
